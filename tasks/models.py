@@ -18,6 +18,9 @@ class Task(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-
+    class Meta:
+        verbose_name = 'задача'
+        verbose_name_plural = 'Задачи'
+        
     def __str__(self) -> str:
         return self.title

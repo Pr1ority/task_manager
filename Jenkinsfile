@@ -1,9 +1,8 @@
 pipeline {
 
-    agent none
+    agent any
     stages {
         stage('Initialize') {
-            agent any
             steps {
                 script {
                     def dockerHome = tool 'myDocker'
@@ -12,20 +11,17 @@ pipeline {
             }
         }
         stage('Build') {
-            agent {
-                docker {
-                    image 'python:3.10-slim'
-                    args '-u root'
-                }
-            }
             steps {
-                sh 'pip install -r requirements.txt'
-                sh 'python manage.py collectstatic --noinput'
-
+                script {
+                    sh 'docker pull python:3.10-slim'
+                }
+                docker.image('python:3.10-slim').inside {
+                    sh 'pip install -r requirements.txt'
+                    sh 'python manage.py collectstatic --noinput'
+                }
             }
         }
         stage('Deploy'){
-            agent any
             steps {
                 script {
                     sh 'docker compose down'

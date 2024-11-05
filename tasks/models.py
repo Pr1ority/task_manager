@@ -2,6 +2,7 @@ from django.db import models
 
 from .constants import TITLE_MAX_LENGTH, STATUS_MAX_LENGTH
 
+
 class Task(models.Model):
     TODO = 'to do'
     IN_PROGRESS = 'in progress'
@@ -21,6 +22,6 @@ class Task(models.Model):
     class Meta:
         verbose_name = 'задача'
         verbose_name_plural = 'Задачи'
-        
+
     def __str__(self) -> str:
         return self.title
